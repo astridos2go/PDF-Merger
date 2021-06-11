@@ -1,51 +1,45 @@
-from tkinter import Toplevel
-from tkinter import filedialog
+__version__ = "1.0"
 
-from tkinter.ttk import Frame
-from tkinter.ttk import Progressbar
-from tkinter.ttk import Labelframe
-from tkinter.ttk import Label
-from tkinter.ttk import Button
+from tkinter import Tk, Toplevel, StringVar
+from tkinter.filedialog import askopenfilenames
+from tkinter.ttk import Frame, Progressbar, Labelframe, Label, Button
 
-from pdfmerger import PDFMerger
+from PyPDF2 import PdfFileMerger
 
 
-
-class Application(Frame):
-    def __init__(self, master=None):
-        super().__init__(master) 
-        self.fileNames = []
-        self.fileLabels = []
-        self.outputFileName = ""
+class Application(Tk):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.title('PDF Merger')
+        
+        self.files = []
+        self.file_names = []
+        self.output_file = StringVar()
         self.pdfMerger = None
         self.progressLabel = None
         self.progressMarker = None
-        self.grid()
-        self.createWidgets()
-
-    def createWidgets(self):
-        top = self.winfo_toplevel()
-        top.rowconfigure(0, weight=1)
-        top.columnconfigure(0, weight=1)
-
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure(0, weight=1)
-
-        self.fileDialogButton = Button(self, text='Browse',command=self.openFileExplorer) 
-        self.fileDialogButton.grid(row=0, column=0, padx=5, pady=5)
-
-        self.mergePDFButton = Button(self, text="Merge", command=self.mergePDFs)
-        self.mergePDFButton.grid(row=0, column=1, padx=5, pady=5)
         
-        self.PDFLabelFrame = Labelframe(self, text="PDFs to Merge")
-        self.PDFLabelFrame.grid(row=1, column=0, columnspan=2)
+        self.draw_GUI()
 
-    def openFileExplorer(self):
-        self.fileNames = filedialog.askopenfilenames(defaultextension=".pdf", filetypes={("*.pdf", ".pdf")})
-        
-        self.__clearPDFLabelFrame()
+    def draw_GUI(self):
 
-        self.__createChosenPDFLabels(self.fileNames)
+        def __menu():
+            ...
+
+        def __file_select():
+            frame = Frame(self)
+
+            load_button = Button(frame, text='Browse', command=self.load_files)
+            load_button.grid(row=0, column=0, padx=5, pady=5)
+
+        def __start():
+            self.mergePDFButton = Button(self, text="Merge", command=self.mergePDFs)
+            self.mergePDFButton.grid(row=0, column=1, padx=5, pady=5)
+
+    def load_files(self):
+        new_files = askopenfilenames(title="Select PDF files to load", filetypes={("*.pdf")})
+        for file in new_files:
+            ...
         
     def mergePDFs(self):
         self.outputFileName = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes={("*.pdf", ".pdf")})
@@ -100,6 +94,21 @@ class Application(Frame):
         self.progressLabel.configure(text=newText)
         self.master.update()
 
-app = Application() 
-app.master.title('PDF Merger') 
+
+class PDFMerger():
+
+    def __init__(self):
+        self.pdfMerger = PdfFileMerger()
+
+    def mergePDFs(self, listOfPDFsToMerge, outputFile, incrementProgressBarBy, incrementProgressLabelBy):
+        for pdf in listOfPDFsToMerge:
+            self.pdfMerger.append(pdf)
+            incrementProgressBarBy((100 / len(listOfPDFsToMerge)))
+            incrementProgressLabelBy((100 / len(listOfPDFsToMerge)))
+            
+        self.pdfMerger.write(outputFile)
+        self.pdfMerger.close()
+
+
+app = Application()
 app.mainloop()
