@@ -1,13 +1,21 @@
-# PDF Merger 🗃
+# PDF Merger :open_file_folder:
 
-This is a repository for a small application that can merge multiple PDFs together to provide a simple, quick, and lightweight method as a more robust alternative to a simple online PDF merger.
+This project is a small PDF merger that will be able to merge multiple PDF files together. 
 
-TODO: ✅
+This project is a fork of [andersonzach02](https://github.com/andersonzach02)'s [PDF-Merger](https://github.com/andersonzach02/PDF-Merger)
 
-- [x] Fix file name labels so that each time the "Browse" button is pressed old file labels are erased
-- [x] Figure out a way to freeze the application or notify the user on the progress of the PDF merging process. Need to figure out a way to get this progress to show and let the user know the operation is complete before closing out.
-- [ ] Fix the application so that you files that you browse for are appended to the list of PDFs to merge (might have to update the functionalilty of the 'Browse' button and have a different way to clear PDFs you no longer want to merge)
+## Roadmap:
+
+### Version 1.0
+TODO: :white_check_mark:
+- [ ] Implement file list viewer
 - [ ] Handle case where a file might not be chosen i.e. potentially lock the merge button until at least 2 files are chosen.
 - [ ] Have a scroll wheel or something similar pop-up when the length of the list of PDFs is longer than the application screen.
 - [ ] Figure out a nice theming for the application.
-- [ ] Package the application to a .exe so that it can be run as a desktop application on devices.
+- [ ] Freeze the program
+
+### Version 2.0
+TODO: :white_check_mark:
+- [ ] Implement PDF editor functionality
+- [ ] 
+
